@@ -21,7 +21,7 @@ dependencies = [
     "click>=8.0",
     "daisy>=1.2.2",
     "funlib.geometry>=0.3",
-    "funlib.persistence>=0.6.1",
+    "funlib.persistence>=0.7.0",
     "mwatershed>=0.5.2",
     "pydantic>=2.6.3",
     "numba>=0.59.0",
@@ -90,20 +90,3 @@ include = ["volara*"]
 
 [tool.ruff]
 lint.select = ["F", "W", "I001"]
-
-[[tool.mypy.overrides]]
-module = [
-    "scipy.*",
-    "daisy.*",
-    "zarr.*",
-    "networkx.*",
-    "mwatershed.*",
-    "funlib.math.*",
-    "dacapo.*",
-    "numba.*",
-    "psycopg2.*",
-    "matplotlib.*",
-    "psutil.*",
-
-]
-ignore_missing_imports = true
