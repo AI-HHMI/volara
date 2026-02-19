@@ -10,7 +10,6 @@ import zarr
 from cloudvolume import CloudVolume
 from funlib.geometry import Coordinate
 from funlib.persistence import Array, open_ds, prepare_ds
-from funlib.persistence.arrays.datasets import ArrayNotFoundError
 from pydantic import Field
 
 from .utils import PydanticCoordinate, StrictBaseModel
@@ -260,7 +259,7 @@ class Affs(Dataset):
         provided = len(self.neighborhood) > 0
         try:
             in_array = self.array("r")
-        except ArrayNotFoundError as e:
+        except FileNotFoundError as e:
             in_array = None
             if not provided:
                 raise ValueError(

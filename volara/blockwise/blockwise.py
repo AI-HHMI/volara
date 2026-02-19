@@ -186,18 +186,16 @@ class BlockwiseTask(StrictBaseModel, ABC):
 
         def check_block(block):
             block_array = open_ds(self.block_ds, mode="r")
+            zarr_arr = block_array._source_data
+
             coordinate = (
                 block.write_roi.offset - block_array.offset
             ) / block_array.voxel_size
-            chunk_size = Coordinate(block_array._source_data.chunks[-coordinate.dims :])
+
+            chunk_size = Coordinate(zarr_arr.chunks[-coordinate.dims :])
             chunk_index = coordinate // chunk_size
             chunk_key = "/".join(str(i) for i in chunk_index)
-            prefix = "/".join("*" for _ in range(block_array.dims - len(chunk_index)))
-
-            glob_pattern = f"{prefix}/{chunk_key}" if len(prefix) > 0 else chunk_key
-            glob_pattern = f"{block_array._source_data.store.path}/{glob_pattern}"
-            matches = glob.glob(glob_pattern, recursive=True)
-            return len(list(matches)) > 0
+            return (zarr_arr.store.root / "c" / chunk_key).exists()
 
         return check_block
 
