@@ -309,7 +309,7 @@ class IterativeGraphMWS(BlockwiseTask):
                     node_attrs=["size", "position"],
                     edge_attrs=list(self.weights.keys())
                     + [f"{attr}__size" for attr in self.weights.keys()],
-                    both_sides=True,
+                    fetch_on_v=True,
                 )
 
                 edges = []
@@ -501,8 +501,12 @@ class IterativeGraphMWS(BlockwiseTask):
                         **agglomerated_edge_attrs,
                     )
 
-                out_rag_provider.write_graph(
-                    out_graph, block.write_roi, both_sides=True
+                out_rag_provider.write_graph(out_graph, block.write_roi)
+                raise NotImplementedError(
+                    """
+                    both sides was removed. For reading it was replaced with `read_on_v`. It has
+                    not been added to write_graph. Check if this is necessary
+                    """
                 )
 
             yield process_block
