@@ -30,6 +30,9 @@ dependencies = [
     "cloud-volume>=12.4.1",
     "polars>=1.31.0",
     "psutil>=7.0.0",
+    # not a direct dependency, but we have to specify
+    # otherwise uv demands a --pre-release=allow flag
+    "iohub>=0.3.0a5",
 ]
 
 [project.optional-dependencies]
